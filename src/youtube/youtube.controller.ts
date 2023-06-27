@@ -6,10 +6,11 @@ import { join } from "path";
 
 @Controller("/api/youtube")
 export class YoutubeController {
-  @Post("video/:videoId")
+  @Post("/:videoId")
   async getVideo(@Param() params: { videoId: string }, @Res() res: Response) {
     const videoUrl = `https://www.youtube.com/watch?v=${params.videoId}`;
     const exec = promisify(execFile);
+    console.log(params);
     const { stdout, stderr } = await exec(
       join(__dirname, "..", "..", "yt-dlp.exe"),
       ["--dump-json", "--no-playlist", videoUrl],
