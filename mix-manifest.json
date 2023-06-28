@@ -1,4 +1,6 @@
 {
     "/src/public/js/app.js": "/src/public/js/app.js",
-    "/src/public/css/app.css": "/src/public/css/app.css"
+    "/src/public/css/app.css": "/src/public/css/app.css",
+    "/src/public/css/json-editor.css": "/src/public/css/json-editor.css",
+    "/src/public/css/img/jsoneditor-icons.svg": "/src/public/css/img/jsoneditor-icons.svg"
 }
