@@ -4,23 +4,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/json-editor.css" />
   </head>
   <body>
     <h1
       class="is-flex is-justify-content-center is-align-items-center is-size-1 has-text-grey-dark my-3"
     >
       <img src="images/NestJS.svg" width="100" class="mr-2" />Nest Youtube</h1>
-    <div class="is-flex is-justify-content-center is-align-items-center">
+    <div
+      class="is-flex is-justify-content-center is-align-items-center"
+      x-data="{
+            search: '',
+               async getVideoJson() {
+                  console.log('starting')
+                  const {data} = await axios.post(`/api/youtube/video/${this.search}`);
+                  console.log(data)
+                  const container = document.getElementById('json-viewer')
+                  const editor = new JSONEditor(container);
+                  editor.set(data);
+                  return data
+            },
+          }"
+    >
       <div id="loading-container" class="control is-loading">
         <input
           id="search"
           type="text"
           class="input"
           placeholder="Youtube URL..."
+          x-data
+          x-model="search"
         />
       </div>
-      <button class="button is-link">Search</button>
+      <button
+        x-data
+        @click="await getVideoJson()"
+        class="button is-link"
+      >Search</button>
     </div>
+    <div id="json-viewer"></div>
+
   </body>
   <script defer type="module" src="/js/app.js"></script>
 </html>
