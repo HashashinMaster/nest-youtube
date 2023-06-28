@@ -19,8 +19,9 @@ export class YoutubeApiController {
      * --no-playlist: return video only if the video in a playlist
      * videoUrl: the url of the video
      */
+    console.log(__dirname);
     const { stdout, stderr } = await exec(
-      join(__dirname, "..", "..", "yt-dlp.exe"),
+      join(__dirname, "..", "..", "..", "yt-dlp.exe"),
       ["--dump-json", "--no-playlist", videoUrl],
     );
     //display error if exec func fails
@@ -53,7 +54,7 @@ export class YoutubeApiController {
      * And set maxBuffer to infinity because stdout is to large
      */
     const { stdout, stderr } = await exec(
-      join(__dirname, "..", "..", "yt-dlp.exe"),
+      join(__dirname, "..", "..", "..", "yt-dlp.exe"),
       [
         "--dump-single-json",
         "--clean-info-json",
