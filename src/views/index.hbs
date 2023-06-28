@@ -3,11 +3,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/css/app.css" />
   </head>
   <body>
     {{hello}}
     <div x-data="{ count: 0 }">
-      <button x-on:click="count++">Increment</button>
+      <button class="button" x-on:click="count++">Increment</button>
 
       <span x-text="count"></span>
     </div>
