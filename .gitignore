@@ -34,4 +34,5 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 src/public/css/*.css
+src/public/css/img
 src/public/js/*.js
