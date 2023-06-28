@@ -35,4 +35,44 @@ export class YoutubeController {
       });
     }
   }
+
+  @Post("playlist/:playlistId")
+  async getPlaylist(
+    @Param() params: { playlistId: string },
+    @Res() res: Response,
+  ) {
+    //generate video url by video id
+    const playlistUrl = `https://www.youtube.com/playlist?list=${params.playlistId}`;
+
+    /**
+     * execute yd-dlp with options:
+     * --dump-single-json: dump one single json with all data of the playist.
+     * --clean-info-json: Remove some internal metadata such as filenames
+     * from the infojson.
+     * --no-write-comments:Do not retrieve video comments.
+     * And set maxBuffer to infinity because stdout is to large
+     */
+    const { stdout, stderr } = await exec(
+      join(__dirname, "..", "..", "yt-dlp.exe"),
+      [
+        "--dump-single-json",
+        "--clean-info-json",
+        "--no-write-comments",
+        playlistUrl,
+      ],
+      { maxBuffer: Infinity },
+    );
+
+    //display error if exec func fails
+    if (stderr) {
+      console.log(stderr);
+      return res.sendStatus(500);
+    } else {
+      //send data
+      return res.json({
+        success: true,
+        data: JSON.parse(stdout),
+      });
+    }
+  }
 }
