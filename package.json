@@ -24,6 +24,7 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "alpinejs": "^3.12.2",
+    "axios": "^1.4.0",
     "bulma": "^0.9.4",
     "hbs": "^4.2.0",
     "reflect-metadata": "^0.1.13",
