@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Render } from "@nestjs/common";
 
-@Controller('youtube')
-export class YoutubeController {}
+@Controller()
+export class YoutubeController {
+  @Get()
+  @Render("index")
+  index() {
+    return {
+      hello: "hello world",
+    };
+  }
+}
