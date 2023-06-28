@@ -6,13 +6,21 @@
     <link rel="stylesheet" href="/css/app.css" />
   </head>
   <body>
-    {{hello}}
-    <div x-data="{ count: 0 }">
-      <button class="button" x-on:click="count++">Increment</button>
-
-      <span x-text="count"></span>
+    <h1
+      class="is-flex is-justify-content-center is-align-items-center is-size-1 has-text-grey-dark my-3"
+    >
+      <img src="images/NestJS.svg" width="100" class="mr-2" />Nest Youtube</h1>
+    <div class="is-flex is-justify-content-center is-align-items-center">
+      <div id="loading-container" class="control is-loading">
+        <input
+          id="search"
+          type="text"
+          class="input"
+          placeholder="Youtube URL..."
+        />
+      </div>
+      <button class="button is-link">Search</button>
     </div>
-
   </body>
   <script defer type="module" src="/js/app.js"></script>
 </html>
