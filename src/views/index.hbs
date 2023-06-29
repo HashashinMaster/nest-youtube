@@ -13,18 +13,7 @@
       <img src="images/NestJS.svg" width="100" class="mr-2" />Nest Youtube</h1>
     <div
       class="is-flex is-justify-content-center is-align-items-center"
-      x-data="{
-            search: '',
-               async getVideoJson() {
-                  console.log('starting')
-                  const {data} = await axios.post(`/api/youtube/video/${this.search}`);
-                  console.log(data)
-                  const container = document.getElementById('json-viewer')
-                  const editor = new JSONEditor(container);
-                  editor.set(data);
-                  return data
-            },
-          }"
+      x-data="searchComponent()"
     >
       <div id="loading-container" class="control is-loading">
         <input
@@ -38,7 +27,7 @@
       </div>
       <button
         x-data
-        @click="await getVideoJson()"
+        @click="await getVideoJSON()"
         class="button is-link"
       >Search</button>
     </div>
