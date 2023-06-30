@@ -51,6 +51,8 @@ window.searchComponent = () => {
         }
         //get json-viewer container
         const container = document.getElementById("json-viewer");
+        //display article element
+        document.querySelector("article").classList.remove("is-hidden");
         // make json viewer object
         const editor = new JSONEditor(container);
         // set data given from my api to the json viewer
