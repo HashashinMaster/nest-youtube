@@ -12,5 +12,12 @@ declare global {
     axios: axios;
     JSONEditor: JSONEditor;
     searchComponent: () => SearchComponentProps;
+    toggleResponseView(
+      $event: Event,
+      JSONTab: HTMLLinkElement,
+      VideoTab: HTMLLinkElement,
+      JSONBlock: HTMLDivElement,
+      VideosBlock: HTMLDivElement,
+    ): void;
   }
 }

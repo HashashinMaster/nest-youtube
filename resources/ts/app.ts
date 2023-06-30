@@ -1,6 +1,12 @@
 import Alpine from "alpinejs";
 import axios from "axios";
 import JSONEditor from "jsoneditor";
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
+
+library.add(faMagnifyingGlass);
+dom.watch();
+
 window.Alpine = Alpine;
 window.axios = axios;
 window.JSONEditor = JSONEditor;
@@ -11,10 +17,11 @@ interface VideoJSON {
 window.searchComponent = () => {
   return {
     search: "",
+    data: "",
     /**
      * @description get response from my api with validation
-     * and create a json editor to view returned data
-     * @returns yt-dlp json
+     * and create a json editor to view the data and store it
+     * @returns void
      */
     async getVideoJSON() {
       //check if input value is valid url
@@ -57,7 +64,7 @@ window.searchComponent = () => {
         const editor = new JSONEditor(container);
         // set data given from my api to the json viewer
         editor.set(data);
-        return data;
+        this.data = data;
       } catch (error) {
         console.log(error.mesage);
       }
@@ -114,7 +121,27 @@ const displayAlert = (type: string) => {
     );
   }
 };
-
+window.toggleResponseView = (
+  $event: Event,
+  JSONTab: HTMLLinkElement,
+  VideoTab: HTMLLinkElement,
+  JSONBlock: HTMLDivElement,
+  VideosBlock: HTMLDivElement,
+) => {
+  //store panel tab
+  const panelTab = $event.currentTarget as HTMLLinkElement;
+  if (panelTab.innerHTML === "JSON") {
+    JSONTab.classList.add("is-active");
+    VideoTab.classList.remove("is-active");
+    VideosBlock.style.display = "none";
+    JSONBlock.style.display = "block";
+  } else if (panelTab.innerHTML === "Video") {
+    VideoTab.classList.add("is-active");
+    JSONTab.classList.remove("is-active");
+    JSONBlock.style.display = "none";
+    VideosBlock.style.display = "block";
+  }
+};
 //stackoverflow stuff
 function isURL(str: string) {
   var pattern = new RegExp(
@@ -128,4 +155,5 @@ function isURL(str: string) {
   ); // fragment locator
   return pattern.test(str);
 }
+
 Alpine.start();

@@ -6,17 +6,15 @@
     <link rel="stylesheet" href="/css/app.css" />
     <link rel="stylesheet" href="/css/json-editor.css" />
   </head>
-  <body>
+  <body x-data="searchComponent()">
     <h1
       class="is-flex is-justify-content-center is-align-items-center is-size-1 has-text-grey-dark my-3"
     >
-      <img src="images/NestJS.svg" width="100" class="mr-2" />Nest Youtube</h1>
+      <img src="images/NestJS.svg" width="100" class="mr-2" />
+      Nest Youtube</h1>
     <div id="alerts-container" class="my-3 px-2"></div>
-    <div
-      class="is-flex is-justify-content-center is-align-items-center"
-      x-data="searchComponent()"
-    >
-      <div id="loading-container" class="control">
+    <div class="is-flex is-justify-content-center is-align-items-center">
+      <div id="loading-container" class="control has-icons-left">
         <input
           id="search"
           type="text"
@@ -25,6 +23,9 @@
           x-data
           x-model="search"
         />
+        <span class="icon is-small is-left" @click="await getVideoJSON()">
+          <i class="fa-solid fa-magnifying-glass is-clickable"></i>
+        </span>
       </div>
       <button
         x-data
@@ -32,17 +33,25 @@
         class="button is-link"
       >Search</button>
     </div>
-    <article class="panel is-success p-5 is-hidden">
+    <article class="panel is-success p-5 is-hidden" x-data>
       <p class="panel-heading">
-        JSON
+        Response
       </p>
       <p class="panel-tabs">
-        <a class="is-active">JSON</a>
-        <a class="">Video</a>
+        <a
+          @click="toggleResponseView($event,$refs.JSONTab,$refs.VideoTab,$refs.JSONBlock,$refs.VideosBlock)"
+          x-ref="JSONTab"
+          class="is-active"
+        >JSON</a>
+        <a
+          @click="toggleResponseView($event,$refs.JSONTab,$refs.VideoTab,$refs.JSONBlock,$refs.VideosBlock)"
+          x-ref="VideoTab"
+          class=""
+        >Video</a>
       </p>
-      <div class="panel-block">
-        <div id="json-viewer"></div>
-
+      <div class="panel-block" id="json-viewer" x-ref="JSONBlock">
+      </div>
+      <div class="panel-block" x-ref="VideosBlock">
       </div>
     </article>
   </body>
