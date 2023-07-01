@@ -3,8 +3,10 @@ import axios from "axios";
 import JSONEditor from "jsoneditor";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
+import { faEye } from "@fortawesome/free-regular-svg-icons/faEye";
+import { faThumbsUp } from "@fortawesome/free-regular-svg-icons/faThumbsUp";
 
-library.add(faMagnifyingGlass);
+library.add(faMagnifyingGlass, faEye, faThumbsUp);
 dom.watch();
 
 window.Alpine = Alpine;
@@ -80,6 +82,8 @@ window.searchComponent = () => {
             title: data.data.title,
             thumbnail: data.data.thumbnail,
             duration_string: data.data.duration_string,
+            view_count: data.data.view_count,
+            like_count: data.data.like_count,
           },
         ]);
         VideoContainer.innerHTML = videoCard;

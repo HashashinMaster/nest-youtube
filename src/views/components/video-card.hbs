@@ -22,12 +22,36 @@
         <figure class="image">
           <img class="card-image" src={{thumbnail}} alt="Placeholder image" />
         </figure>
-        <p class="subtitle is-5 mt-3">{{title}}</p>
-
+        <div
+          class="is-flex is-justify-content-space-between px-2 is-align-items-center"
+        >
+          <p class="subtitle is-5 mt-3">{{title}}</p>
+          <div class="tag is-danger is-rounded">
+            {{duration_string}}
+          </div>
+        </div>
+      </div>
+      <div
+        class="is-flex is-justify-content-space-between px-2 is-align-items-center"
+      >
+        <span>
+          <i class="fa-regular fa-eye"></i>
+          <strong class="subtitle is-6 mt-3">{{view_count}}</strong>
+        </span>
+        <span>
+          <i class="fa-regular fa-thumbs-up"></i>
+          <strong class="subtitle is-6 mt-3">{{like_count}}</strong>
+        </span>
       </div>
 
-      <footer class="card-footer">
-        {{duration_string}}
+      <footer class="card-footer is-flex is-justify-content-space-between px-2">
+        <div class="select">
+          <select>
+            <option>mp4</option>
+            <option>With options</option>
+          </select>
+        </div>
+        <button class="button is-danger">Download</button>
       </footer>
     </div>
   {{/with}}
