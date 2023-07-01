@@ -1,0 +1,34 @@
+{{#each videos}}
+  {{#with this}}
+    <div class="card-container">
+      <header class="card-header p-4">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <img src="images/youtube.png" alt="Placeholder image" />
+            </figure>
+          </div>
+        </div>
+        <div class="media-content">
+          <a href={{uploader_url}} target="_blank">
+            <p class="title is-4">{{channel}}</p>
+            <p class="subtitle is-6">{{uploader_id}}</p>
+
+          </a>
+        </div>
+      </header>
+
+      <div class="card-content p-0">
+        <figure class="image">
+          <img class="card-image" src={{thumbnail}} alt="Placeholder image" />
+        </figure>
+        <p class="subtitle is-5 mt-3">{{title}}</p>
+
+      </div>
+
+      <footer class="card-footer">
+        {{duration_string}}
+      </footer>
+    </div>
+  {{/with}}
+{{/each}}
