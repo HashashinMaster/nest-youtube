@@ -10,7 +10,7 @@
     <h1
       class="is-flex is-justify-content-center is-align-items-center is-size-1 has-text-grey-dark my-3"
     >
-      <img src="images/NestJS.svg" width="100" class="mr-2" />
+      <img src="/images/NestJS.svg" width="100" class="mr-2" />
       Nest Youtube</h1>
     <div id="alerts-container" class="my-3 px-2"></div>
     <div class="is-flex is-justify-content-center is-align-items-center">
@@ -51,7 +51,12 @@
       </p>
       <div class="panel-block" id="json-viewer" x-ref="JSONBlock">
       </div>
-      <div class="panel-block" x-ref="VideosBlock">
+      <div
+        class="panel-block"
+        id="videos-viewer"
+        x-ref="VideosBlock"
+        style="display: none;"
+      >
       </div>
     </article>
   </body>
