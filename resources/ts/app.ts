@@ -57,13 +57,32 @@ window.searchComponent = () => {
           return;
         }
         //get json-viewer container
-        const container = document.getElementById("json-viewer");
+        const JSONContainer = document.getElementById("json-viewer");
+        //remove previouse json-viewer
+        JSONContainer.innerHTML = "";
         //display article element
         document.querySelector("article").classList.remove("is-hidden");
         // make json viewer object
-        const editor = new JSONEditor(container);
+        const editor = new JSONEditor(JSONContainer);
         // set data given from my api to the json viewer
         editor.set(data);
+
+        // get videos-json container
+        const VideoContainer = document.getElementById("videos-viewer")!;
+        //remove previouse videos-viewer
+        VideoContainer.innerHTML = "";
+        //component query
+        const { data: videoCard } = await axios.post(`/component`, [
+          {
+            uploader_url: data.data.uploader_url,
+            channel: data.data.channel,
+            uploader_id: data.data.uploader_id,
+            title: data.data.title,
+            thumbnail: data.data.thumbnail,
+            duration_string: data.data.duration_string,
+          },
+        ]);
+        VideoContainer.innerHTML = videoCard;
         this.data = data;
       } catch (error) {
         console.log(error.mesage);
