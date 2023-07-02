@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Render, Body } from "@nestjs/common";
+import { Controller, Get, Post, Render, Body, Param } from "@nestjs/common";
 
 @Controller()
 export class YoutubeController {
-  @Get()
+  @Get("/:type")
   @Render("index")
-  index() {}
+  index(@Param("type") type: string) {
+    return {
+      type,
+    };
+  }
   @Post("/component")
   @Render("components/video-card")
   showVideos(@Body() videosBody: { videos: Array<any> }) {
