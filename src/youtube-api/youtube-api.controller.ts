@@ -1,4 +1,4 @@
-import { Controller, Post, Res, Param } from "@nestjs/common";
+import { Controller, Post, Res, Param, Put, Body } from "@nestjs/common";
 import { Response } from "express";
 import { execFile } from "child_process";
 import { promisify } from "util";
@@ -19,7 +19,6 @@ export class YoutubeApiController {
      * --no-playlist: return video only if the video in a playlist
      * videoUrl: the url of the video
      */
-    console.log(__dirname);
     const { stdout, stderr } = await exec(
       join(__dirname, "..", "..", "..", "yt-dlp.exe"),
       ["--dump-json", "--no-playlist", videoUrl],
@@ -75,5 +74,10 @@ export class YoutubeApiController {
         data: JSON.parse(stdout),
       });
     }
+  }
+
+  @Put("/video/download")
+  async downloadVideo(@Body() videoUrl: string) {
+    console.log("sdasd", videoUrl);
   }
 }
