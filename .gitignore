@@ -33,6 +33,10 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-src/public/css/*.css
-src/public/css/img
-src/public/js/*.js
+public/css/*.css
+public/css/img
+public/js/*.js
+ffmpeg.exe 
+ffplay.exe 
+ffprobe.exe
+yt-dlp.exe
