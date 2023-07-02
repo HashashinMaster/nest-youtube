@@ -33,6 +33,7 @@
     "bulma": "^0.9.4",
     "hbs": "^4.2.0",
     "jsoneditor": "^9.10.2",
+    "nunjucks": "^3.2.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
