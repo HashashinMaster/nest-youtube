@@ -57,7 +57,7 @@
           </select>
         </div>
 
-        <button class="button is-danger">Download</button>
+        <button @click=" await download('{{video.url}}')" class="button is-danger">Download</button>
       </footer>
     </div>
 {% endfor %}
