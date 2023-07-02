@@ -76,6 +76,7 @@ window.searchComponent = () => {
         //component query
         const { data: videoCard } = await axios.post(`/component`, [
           {
+            url: data.data.original_url,
             uploader_url: data.data.uploader_url,
             channel: data.data.channel,
             uploader_id: data.data.uploader_id,
@@ -162,8 +163,12 @@ window.toggleResponseView = (
     VideoTab.classList.add("is-active");
     JSONTab.classList.remove("is-active");
     JSONBlock.style.display = "none";
-    VideosBlock.style.display = "block";
+    VideosBlock.style.display = "flex";
   }
+};
+
+window.download = async (url: string) => {
+  await axios.put("/api/youtube/video/download", { url });
 };
 //stackoverflow stuff
 function isURL(str: string) {

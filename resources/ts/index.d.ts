@@ -19,5 +19,6 @@ declare global {
       JSONBlock: HTMLDivElement,
       VideosBlock: HTMLDivElement,
     ): void;
+    download: (url: string) => void;
   }
 }
