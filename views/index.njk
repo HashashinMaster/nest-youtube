@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title> nestYt-{{type}}</title>
     <link rel="stylesheet" href="/css/app.css" />
     <link rel="stylesheet" href="/css/json-editor.css" />
   </head>
@@ -11,7 +11,7 @@
       class="is-flex is-justify-content-center is-align-items-center is-size-1 has-text-grey-dark my-3"
     >
       <img src="/images/NestJS.svg" width="100" class="mr-2" />
-      Nest Youtube</h1>
+      Nest Youtube </h1>
     <div id="alerts-container" class="my-3 px-2"></div>
     <div class="is-flex is-justify-content-center is-align-items-center">
       <div id="loading-container" class="control has-icons-left">
@@ -31,7 +31,7 @@
         x-data
         @click="await getVideoJSON()"
         class="button is-link"
-      >Search</button>
+      >Search {{ type }}</button>
     </div>
     <article class="panel is-success p-5 is-hidden" x-data>
       <p class="panel-heading">
@@ -52,7 +52,7 @@
       <div class="panel-block" id="json-viewer" x-ref="JSONBlock">
       </div>
       <div
-        class="panel-block"
+        class="panel-block {{'is-justify-centent-center' if type === 'video' }}"
         id="videos-viewer"
         x-ref="VideosBlock"
         style="display: none;"
