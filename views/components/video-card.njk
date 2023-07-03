@@ -43,21 +43,40 @@
         </span>
       </div>
 
-      <footer class="card-footer is-flex is-justify-content-space-between px-2">
+      <footer x-data class="card-footer is-flex is-justify-content-space-between px-2">
         <div class="select">
-          <select>
-            <option>mp4</option>
-            <option>3gp</option>
+         <select x-ref="format">
+        <optgroup label="Audios">
             <option>aac</option>
-            <option>mp3</option>
-            <option>m4a</option>
-            <option>ogg</option>
-            <option>wav</option>
-            <option>webm</option>
-          </select>
+              <option value="mp3">mp3</option>
+              <option value="m4a">m4a</option>
+              <option value="ogg">ogg</option>
+              <option value="wav">wav</option>
+          </optgroup>
+          <optgroup label="Videos">
+            <option value="avi">avi</option>
+            <option value="flv">flv</option>
+            <option value="gif">gif</option>
+            <option value="mkv">mkv</option>
+            <option value="mov">mov</option>
+            <option value="mp4">mp4</option>
+            <option value="webm">webm</option>
+            <option value="aac">aac</option>
+            <option value="aiff">aiff</option>
+            <option value="alac">alac</option>
+            <option value="flac">flac</option>
+            <option value="m4a">m4a</option>
+            <option value="mka">mka</option>
+            <option value="mp3">mp3</option>
+            <option value="ogg">ogg</option>
+            <option value="opus">opus</option>
+            <option value="vorbis">vorbis</option>
+          </optgroup>
+        </select>
+
         </div>
 
-        <button @click=" await download('{{video.url}}')" class="button is-danger">Download</button>
+        <button @click=" await download('{{video.url}}',$refs.format.value)" class="button is-danger">Download</button>
       </footer>
     </div>
 {% endfor %}
