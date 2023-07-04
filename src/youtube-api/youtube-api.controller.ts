@@ -87,6 +87,7 @@ export class YoutubeApiController {
       "..",
       "..",
       "..",
+      "public",
       "temp",
       "%(title)s.%(ext)s",
     );
