@@ -40,3 +40,5 @@ ffmpeg.exe
 ffplay.exe 
 ffprobe.exe
 yt-dlp.exe
+public/temp/*
+!public/temp/.gitkeep
