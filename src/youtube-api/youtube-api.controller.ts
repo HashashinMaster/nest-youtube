@@ -77,7 +77,59 @@ export class YoutubeApiController {
   }
 
   @Put("/video/download")
-  async downloadVideo(@Body() videoUrl: string) {
-    console.log("sdasd", videoUrl);
+  async downloadVideo(
+    @Body() videoData: VideoDownloadObject,
+    @Res() res: Response,
+  ) {
+    const ffmpegPath = join(__dirname, "..", "..", "..", "ffmpeg.exe");
+    const tempPath = join(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "temp",
+      "%(title)s.%(ext)s",
+    );
+    const yt_dlpPath = join(__dirname, "..", "..", "..", "yt-dlp");
+    console.log(videoData);
+    if (videoData.type === "videos") {
+      console.log("here");
+      const { stdout, stderr } = await exec(
+        yt_dlpPath,
+        [
+          "--no-playlist",
+          `--ffmpeg-location`,
+          ffmpegPath,
+          `-o`,
+          tempPath,
+          `--recode`,
+          videoData.format,
+          videoData.url,
+        ],
+        { timeout: 0 },
+      );
+      console.log("sdasd");
+      res.json({ success: true });
+    }
+    if (videoData.type === "audios") {
+      const { stdout, stderr } = await exec(yt_dlpPath, [
+        "--no-playlist",
+        "-x",
+        "--audio-format",
+        videoData.format,
+        `--ffmpeg-location`,
+        ffmpegPath,
+        `-o`,
+        tempPath,
+        videoData.url,
+      ]);
+      console.log("dadasdas audio");
+      res.json({ success: true });
+    }
   }
+}
+interface VideoDownloadObject {
+  url: string;
+  format: string;
+  type: "audios" | "videos";
 }
