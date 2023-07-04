@@ -167,8 +167,16 @@ window.toggleResponseView = (
   }
 };
 
-window.download = async (url: string) => {
-  await axios.put("/api/youtube/video/download", { url });
+window.download = async (url: string, format: string) => {
+  const formatType = (
+    document.querySelector(`[value='${format}'`)
+      .parentElement as HTMLOptGroupElement
+  ).label;
+  await axios.put("/api/youtube/video/download", {
+    url,
+    format: format,
+    type: formatType.toLocaleLowerCase(),
+  });
 };
 //stackoverflow stuff
 function isURL(str: string) {
