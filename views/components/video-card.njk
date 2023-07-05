@@ -47,7 +47,6 @@
         <div class="select">
          <select x-ref="format">
         <optgroup label="Audios">
-            <option>aac</option>
               <option value="mp3">mp3</option>
               <option value="m4a">m4a</option>
               <option value="wav">wav</option>
@@ -63,7 +62,7 @@
 
         </div>
 
-        <button @click=" await download('{{video.url}}',$refs.format.value)" class="button is-danger">Download</button>
+        <button @click=" await download('{{video.url}}',$refs.format.value,'{{video.title}}')" class="button is-danger">Download</button>
       </footer>
     </div>
 {% endfor %}
