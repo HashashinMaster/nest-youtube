@@ -5,6 +5,8 @@ import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faEye } from "@fortawesome/free-regular-svg-icons/faEye";
 import { faThumbsUp } from "@fortawesome/free-regular-svg-icons/faThumbsUp";
+import { io } from "socket.io-client";
+import { randomUUID } from "crypto";
 
 library.add(faMagnifyingGlass, faEye, faThumbsUp);
 dom.watch();
@@ -16,6 +18,19 @@ interface VideoJSON {
   success: boolean;
   data: any;
 }
+
+/**
+ * send socket event when user close o refresh tab
+ * to remove medias he downloaded from my poor
+ * server
+ */
+const socket = io();
+const uuid = (document.querySelector("meta[name='uuid']") as HTMLMetaElement)
+  .content;
+window.addEventListener("beforeunload", () => {
+  socket.emit("userDisconnect", { uuid });
+});
+
 window.searchComponent = () => {
   return {
     search: "",
@@ -167,15 +182,19 @@ window.toggleResponseView = (
   }
 };
 
-window.download = async (url: string, format: string) => {
+window.download = async (url: string, format: string, title: string) => {
   const formatType = (
     document.querySelector(`[value='${format}'`)
       .parentElement as HTMLOptGroupElement
   ).label;
+
+  console.log(uuid);
   await axios.put("/api/youtube/video/download", {
     url,
     format: format,
     type: formatType.toLocaleLowerCase(),
+    uuid,
+    title,
   });
 };
 //stackoverflow stuff
