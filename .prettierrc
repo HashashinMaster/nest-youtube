@@ -1,4 +1,14 @@
 {
   "singleQuote": false,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "*.njk",
+      "options": {
+        "parser": "html",
+        "singleQuote": false,
+        "tabWidth": 2
+      }
+    }
+  ]
 }
