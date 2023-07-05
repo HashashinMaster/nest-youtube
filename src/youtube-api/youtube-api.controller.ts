@@ -81,6 +81,7 @@ export class YoutubeApiController {
     @Body() videoData: VideoDownloadObject,
     @Res() res: Response,
   ) {
+    console.log(videoData);
     const ffmpegPath = join(__dirname, "..", "..", "..", "ffmpeg.exe");
     const tempPath = join(
       __dirname,
@@ -89,13 +90,13 @@ export class YoutubeApiController {
       "..",
       "public",
       "temp",
+      videoData.uuid,
+      videoData.type,
       "%(title)s.%(ext)s",
     );
     const yt_dlpPath = join(__dirname, "..", "..", "..", "yt-dlp");
-    console.log(videoData);
     if (videoData.type === "videos") {
-      console.log("here");
-      const { stdout, stderr } = await exec(
+      await exec(
         yt_dlpPath,
         [
           "--no-playlist",
@@ -113,7 +114,7 @@ export class YoutubeApiController {
       res.json({ success: true });
     }
     if (videoData.type === "audios") {
-      const { stdout, stderr } = await exec(yt_dlpPath, [
+      await exec(yt_dlpPath, [
         "--no-playlist",
         "-x",
         "--audio-format",
@@ -124,8 +125,10 @@ export class YoutubeApiController {
         tempPath,
         videoData.url,
       ]);
-      console.log("dadasdas audio");
-      res.json({ success: true });
+      res.json({
+        success: true,
+        path: `${videoData.type}/${videoData.title}.${videoData.format}`,
+      });
     }
   }
 }
@@ -133,4 +136,6 @@ interface VideoDownloadObject {
   url: string;
   format: string;
   type: "audios" | "videos";
+  uuid: string;
+  title: string;
 }
