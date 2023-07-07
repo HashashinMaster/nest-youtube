@@ -3,5 +3,15 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyin
 import { faEye } from "@fortawesome/free-regular-svg-icons/faEye";
 import { faThumbsUp } from "@fortawesome/free-regular-svg-icons/faThumbsUp";
 import { faDownload } from "@fortawesome/free-solid-svg-icons/faDownload";
-library.add(faMagnifyingGlass, faEye, faThumbsUp, faDownload);
+import { faVideo } from "@fortawesome/free-solid-svg-icons/faVideo";
+import { faRectangleList } from "@fortawesome/free-regular-svg-icons/faRectangleList";
+
+library.add(
+  faMagnifyingGlass,
+  faEye,
+  faThumbsUp,
+  faDownload,
+  faVideo,
+  faRectangleList,
+);
 dom.watch();

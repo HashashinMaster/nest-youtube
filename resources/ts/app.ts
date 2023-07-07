@@ -32,24 +32,17 @@ window.searchComponent = () => {
      * and create a json editor to view the data and store it
      * @returns void
      */
-    async getVideoJSON() {
+    async getData() {
       //check if input value is valid url
-      if (!isURL(this.search)) {
+      console.log(validURL(this.search), this.search);
+      if (!validURL(this.search)) {
         //display no url alert
         displayAlert("no URL");
         return;
       }
-      //create URL object
-      let searchLink = new URL(this.search);
-      let videoId: string;
-      //checks the youtube url type and extract video id from it
-      if (searchLink.hostname === "youtu.be")
-        videoId = searchLink.pathname.slice(1);
-      else if (searchLink.searchParams.get("v")) {
-        videoId = searchLink.searchParams.get("v");
-      } else {
-        //display invalid url
-        displayAlert("invalid URL");
+      //validate url
+      const { allGood, videoId } = validateUrl(this.search);
+      if (!allGood) {
         return;
       }
       try {
@@ -65,23 +58,9 @@ window.searchComponent = () => {
         if (!data.success) {
           return;
         }
-        //get json-viewer container
-        const JSONContainer = document.getElementById("json-viewer");
-        //remove previouse json-viewer
-        JSONContainer.innerHTML = "";
-        //display article element
-        document.querySelector("article").classList.remove("is-hidden");
-        // make json viewer object
-        const editor = new JSONEditor(JSONContainer);
-        // set data given from my api to the json viewer
-        editor.set(data);
-
-        // get videos-json container
-        const VideoContainer = document.getElementById("videos-viewer")!;
-        //remove previouse videos-viewer
-        VideoContainer.innerHTML = "";
-        //component query
-        const { data: videoCard } = await axios.post(`/component`, [
+        //display json data in json viewer
+        displayJsonViewer(data);
+        await generateVideosCards([
           {
             url: data.data.original_url,
             uploader_url: data.data.uploader_url,
@@ -94,13 +73,77 @@ window.searchComponent = () => {
             like_count: data.data.like_count,
           },
         ]);
-        VideoContainer.innerHTML = videoCard;
         this.data = data;
       } catch (error) {
         console.log(error.mesage);
       }
     },
   };
+};
+
+/**
+ *
+ * @param url string
+ * @description verify youtube hostname
+ * @returns Object
+ */
+const validateUrl = (url: string) => {
+  //create URL object
+  let searchLink = new URL(url);
+  let videoId: string;
+  if (location.pathname === "/video") {
+    //checks the youtube url type and extract video id from it
+    if (searchLink.hostname === "youtu.be")
+      videoId = searchLink.pathname.slice(1);
+    else if (searchLink.searchParams.get("v")) {
+      videoId = searchLink.searchParams.get("v");
+      return { allGood: true, videoId };
+    } else {
+      //display invalid url
+      displayAlert("invalid URL");
+      return { allGood: false };
+    }
+  }
+  if (location.pathname === "/playlist") {
+    console.log(searchLink.hostname);
+    if (
+      searchLink.hostname === "www.youtube.com" &&
+      searchLink.searchParams.get("list")
+    ) {
+      videoId = searchLink.searchParams.get("list");
+      return { allGood: true, videoId };
+    } else {
+      //display invalid url
+      displayAlert("invalid URL");
+      return { allGood: false };
+    }
+  }
+};
+/**
+ *
+ * @param data object
+ * @description display json data in json viewer
+ */
+const displayJsonViewer = (data: VideoJSON) => {
+  //get json-viewer container
+  const JSONContainer = document.getElementById("json-viewer");
+  //remove previouse json-viewer
+  JSONContainer.innerHTML = "";
+  //display article element
+  document.querySelector("article").classList.remove("is-hidden");
+  // make json viewer object
+  const editor = new JSONEditor(JSONContainer);
+  // set data given from my api to the json viewer
+  editor.set(data);
+};
+const generateVideosCards = async (data: any) => {
+  // get videos-json container
+  const VideoContainer = document.getElementById("videos-viewer")!;
+  //remove previouse videos-viewer
+  VideoContainer.innerHTML = "";
+  //component query
+  const { data: videoCard } = await axios.post(`/component`, data);
+  VideoContainer.innerHTML = videoCard;
 };
 // store search input and it's container
 const loadingContainer =
@@ -228,17 +271,17 @@ window.download = async (
   }
 };
 //stackoverflow stuff
-function isURL(str: string) {
+function validURL(str) {
   var pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
       "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
       "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
       "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
       "(\\#[-a-z\\d_]*)?$",
     "i",
   ); // fragment locator
-  return pattern.test(str);
+  return !!pattern.test(str);
 }
 
 Alpine.start();
