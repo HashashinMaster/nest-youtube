@@ -81,8 +81,12 @@ export class YoutubeApiController {
     @Body() videoData: VideoDownloadObject,
     @Res() res: Response,
   ) {
-    console.log(videoData);
+    //get ffmpeg file path
     const ffmpegPath = join(__dirname, "..", "..", "..", "ffmpeg.exe");
+    /**
+     * create temp file path with user uuid
+     * and file type
+     */
     const tempPath = join(
       __dirname,
       "..",
@@ -94,8 +98,17 @@ export class YoutubeApiController {
       videoData.type,
       "%(title)s.%(ext)s",
     );
+    //get yt-dlp path
     const yt_dlpPath = join(__dirname, "..", "..", "..", "yt-dlp");
+    //check if vid data is video
     if (videoData.type === "videos") {
+      /**
+       * execute yd-dlp with options:
+       * --no-playlist: do not download playlist if video inside it.
+       *`--ffmpeg-location: ffmpeg file path
+       * -o: output directory
+       * --recode: recode video to another format
+       */
       await exec(
         yt_dlpPath,
         [
@@ -114,6 +127,14 @@ export class YoutubeApiController {
       res.json({ success: true });
     }
     if (videoData.type === "audios") {
+      /**
+       * execute yd-dlp with options:
+       * --no-playlist: do not download playlist if video inside it.
+       *`--x: extract audio only
+       * --audio-format: specify audio format
+       *`--ffmpeg-location: ffmpeg file path
+       * -o: output directory
+       */
       await exec(yt_dlpPath, [
         "--no-playlist",
         "-x",
