@@ -11,3 +11,10 @@
 .card-container {
   width: 28rem;
 }
+#videos-viewer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+}
