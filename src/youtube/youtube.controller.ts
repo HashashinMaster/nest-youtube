@@ -3,9 +3,12 @@ import { v4 as uuidv4 } from "uuid";
 
 @Controller()
 export class YoutubeController {
-  @Get("/:type")
+  @Get()
   @Render("index")
-  index(@Param("type") type: string) {
+  index() {}
+  @Get("/:type")
+  @Render("download")
+  show(@Param("type") type: string) {
     return {
       type,
       uuid: uuidv4(),
