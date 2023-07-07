@@ -160,6 +160,15 @@ const displayAlert = (type: string) => {
     );
   }
 };
+/**
+ *
+ * @param $event Event: alpine event
+ * @param JSONTab HTMLinkElement: json tab element
+ * @param VideoTab HTMLinkElement: video tab element
+ * @param JSONBlock HTMLDivElement: block where to store json
+ * @param VideosBlock HTMLDivElement: block where to store videos
+ * @description togggle between json tab and video tab
+ */
 window.toggleResponseView = (
   $event: Event,
   JSONTab: HTMLLinkElement,
@@ -182,20 +191,49 @@ window.toggleResponseView = (
   }
 };
 
-window.download = async (url: string, format: string, title: string) => {
+interface VideoDownloadResponse {
+  success: boolean;
+  path: string;
+}
+/**
+ *
+ * @param $event string: alpine Event
+ * @param url string: url of the video
+ * @param format string: format of the video
+ * @param title string: title of the video
+ * @description send put request to the server to download
+ *              the video and prompt download on client side
+ */
+window.download = async (
+  $event: Event,
+  url: string,
+  format: string,
+  title: string,
+) => {
+  ($event.target as HTMLButtonElement).disabled = true;
   const formatType = (
     document.querySelector(`[value='${format}'`)
       .parentElement as HTMLOptGroupElement
   ).label;
 
-  console.log(uuid);
-  await axios.put("/api/youtube/video/download", {
-    url,
-    format: format,
-    type: formatType.toLocaleLowerCase(),
-    uuid,
-    title,
-  });
+  const { data } = await axios.put<VideoDownloadResponse>(
+    "/api/youtube/video/download",
+    {
+      url,
+      format: format,
+      type: formatType.toLocaleLowerCase(),
+      uuid,
+    },
+  );
+  ($event.target as HTMLButtonElement).disabled = false;
+
+  if (data.success) {
+    const a = document.createElement("a");
+    a.href = `/temp/${uuid}/${formatType.toLocaleLowerCase()}/${title}.${format}`;
+    console.log(a.href);
+    a.download = `${title}.${format}`;
+    a.click();
+  }
 };
 //stackoverflow stuff
 function isURL(str: string) {
