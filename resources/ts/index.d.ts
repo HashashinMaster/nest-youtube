@@ -19,6 +19,11 @@ declare global {
       JSONBlock: HTMLDivElement,
       VideosBlock: HTMLDivElement,
     ): void;
-    download: (url: string, format: string, title: string) => void;
+    download: (
+      $event: Event,
+      url: string,
+      format: string,
+      title: string,
+    ) => void;
   }
 }
