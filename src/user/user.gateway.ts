@@ -27,6 +27,7 @@ export class UserGateway {
       if (!error) {
         (async () => {
           await rm(folderPath, { recursive: true });
+          console.log("file removed");
         })();
       } else {
         console.log("b9i madawonloada walu");

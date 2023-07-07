@@ -127,7 +127,6 @@ export class YoutubeApiController {
       ]);
       res.json({
         success: true,
-        path: `${videoData.type}/${videoData.title}.${videoData.format}`,
       });
     }
   }
