@@ -49,7 +49,7 @@ window.searchComponent = () => {
         startLoading();
         //fetch data
         const { data } = await axios.post<VideoJSON>(
-          `/api/youtube/video/${videoId}`,
+          `/api/youtube${location.pathname}/${videoId}`,
         );
         //stop loading animation
         stopLoading();
@@ -59,19 +59,36 @@ window.searchComponent = () => {
         }
         //display json data in json viewer
         displayJsonViewer(data);
-        await generateVideosCards([
-          {
-            url: data.data.original_url,
-            uploader_url: data.data.uploader_url,
-            channel: data.data.channel,
-            uploader_id: data.data.uploader_id,
-            title: data.data.title,
-            thumbnail: data.data.thumbnail,
-            duration_string: data.data.duration_string,
-            view_count: data.data.view_count,
-            like_count: data.data.like_count,
-          },
-        ]);
+        if (location.pathname === "/video") {
+          await generateVideosCards([
+            {
+              url: data.data.original_url,
+              uploader_url: data.data.uploader_url,
+              channel: data.data.channel,
+              uploader_id: data.data.uploader_id,
+              title: data.data.title,
+              thumbnail: data.data.thumbnail,
+              duration_string: data.data.duration_string,
+              view_count: data.data.view_count,
+              like_count: data.data.like_count,
+            },
+          ]);
+        }
+        if (location.pathname === "/playlist") {
+          console.log(data.data.entries);
+          const vids = data.data.entries.map((vid) => ({
+            url: vid.original_url,
+            uploader_url: vid.uploader_url,
+            channel: vid.channel,
+            uploader_id: vid.uploader_id,
+            title: vid.title,
+            thumbnail: vid.thumbnail,
+            duration_string: vid.duration_string,
+            view_count: vid.view_count,
+            like_count: vid.like_count,
+          }));
+          await generateVideosCards(vids);
+        }
         this.data = data;
       } catch (error) {
         console.log(error.mesage);
