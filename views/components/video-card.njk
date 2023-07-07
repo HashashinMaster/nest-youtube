@@ -62,7 +62,7 @@
 
         </div>
 
-        <button @click=" await download('{{video.url}}',$refs.format.value,'{{video.title}}')" class="button is-danger">Download</button>
+        <button @click=" await download($event,'{{video.url}}',$refs.format.value,'{{video.title}}')" class="button is-danger">Download</button>
       </footer>
     </div>
 {% endfor %}
