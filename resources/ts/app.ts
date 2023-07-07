@@ -34,7 +34,6 @@ window.searchComponent = () => {
      */
     async getData() {
       //check if input value is valid url
-      console.log(validURL(this.search), this.search);
       if (!validURL(this.search)) {
         //display no url alert
         displayAlert("no URL");
@@ -177,16 +176,28 @@ const alertComponent = (type: string, message: string) => `
 const displayAlert = (type: string) => {
   const alertContainer =
     document.querySelector<HTMLDivElement>("#alerts-container")!;
-  const wrongURLMessage = `The URL you entered (${searchInput.value}) is invalid!
+  const wrongVideoURLMessage = `The URL you entered (${searchInput.value}) is invalid!
     </br>
     URL formats are:
     <ul>
         <li>https://www.youtube.com/watch?v=<strong>videoId</strong></li>
         <li>https://youtu.be/<strong>videoId</strong></li>
     </ul>`;
+  const wrongPlaylistURLMessage = `The URL you entered (${searchInput.value}) is invalid!
+    </br>
+    URL formats are:
+    <ul>
+        <li>https://www.youtube.com/playlist?list=<strong>playlistId</strong></li>
+    </ul>`;
 
   if (type === "invalid URL") {
-    alertContainer.innerHTML = alertComponent("danger", wrongURLMessage);
+    if (location.pathname === "/video")
+      alertContainer.innerHTML = alertComponent("danger", wrongVideoURLMessage);
+    if (location.pathname === "/playlist")
+      alertContainer.innerHTML = alertComponent(
+        "danger",
+        wrongPlaylistURLMessage,
+      );
   }
   if (type === "no URL") {
     alertContainer.innerHTML = alertComponent(
