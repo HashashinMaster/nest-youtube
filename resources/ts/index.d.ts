@@ -4,7 +4,7 @@ import { JSONEditor } from "jsoneditor";
 
 interface SearchComponentProps {
   search: string;
-  getVideoJSON: () => Promise<any>;
+  getData: () => Promise<any>;
 }
 declare global {
   interface Window {
