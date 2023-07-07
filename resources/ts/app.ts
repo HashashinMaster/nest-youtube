@@ -1,15 +1,7 @@
 import Alpine from "alpinejs";
 import axios from "axios";
 import JSONEditor from "jsoneditor";
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
-import { faEye } from "@fortawesome/free-regular-svg-icons/faEye";
-import { faThumbsUp } from "@fortawesome/free-regular-svg-icons/faThumbsUp";
 import { io } from "socket.io-client";
-import { randomUUID } from "crypto";
-
-library.add(faMagnifyingGlass, faEye, faThumbsUp);
-dom.watch();
 
 window.Alpine = Alpine;
 window.axios = axios;
