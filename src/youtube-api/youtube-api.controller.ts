@@ -41,6 +41,7 @@ export class YoutubeApiController {
     @Param() params: { playlistId: string },
     @Res() res: Response,
   ) {
+    console.log(params);
     //generate video url by video id
     const playlistUrl = `https://www.youtube.com/playlist?list=${params.playlistId}`;
 
@@ -62,8 +63,8 @@ export class YoutubeApiController {
       ],
       { maxBuffer: Infinity },
     );
-
     //display error if exec func fails
+    console.log("end");
     if (stderr) {
       console.log(stderr);
       return res.sendStatus(500);
@@ -94,9 +95,8 @@ export class YoutubeApiController {
       "temp",
       videoData.uuid,
       videoData.type,
-      "%(title)s.%(ext)s",
+      `${videoData.title}.%(ext)s`,
     );
-    console.log(tempPath);
     //get yt-dlp path
     const yt_dlpPath = join(__dirname, "..", "..", "yt-dlp.exe");
     //check if vid data is video
@@ -122,7 +122,6 @@ export class YoutubeApiController {
         ],
         { timeout: 0 },
       );
-      console.log("sdasd");
       res.json({ success: true });
     }
     if (videoData.type === "audios") {

@@ -2,7 +2,6 @@ import Alpine from "alpinejs";
 import axios from "axios";
 import JSONEditor from "jsoneditor";
 import { io } from "socket.io-client";
-
 window.Alpine = Alpine;
 window.axios = axios;
 window.JSONEditor = JSONEditor;
@@ -10,7 +9,6 @@ interface VideoJSON {
   success: boolean;
   data: any;
 }
-
 /**
  * send socket event when user close o refresh tab
  * to remove medias he downloaded from my poor
@@ -51,6 +49,7 @@ window.searchComponent = () => {
         const { data } = await axios.post<VideoJSON>(
           `/api/youtube${location.pathname}/${videoId}`,
         );
+        console.log(data);
         //stop loading animation
         stopLoading();
         //if success props is set to false return
@@ -75,7 +74,6 @@ window.searchComponent = () => {
           ]);
         }
         if (location.pathname === "/playlist") {
-          console.log(data.data.entries);
           const vids = data.data.entries.map((vid) => ({
             url: vid.original_url,
             uploader_url: vid.uploader_url,
@@ -121,7 +119,6 @@ const validateUrl = (url: string) => {
     }
   }
   if (location.pathname === "/playlist") {
-    console.log(searchLink.hostname);
     if (
       searchLink.hostname === "www.youtube.com" &&
       searchLink.searchParams.get("list")
@@ -256,7 +253,7 @@ window.toggleResponseView = (
 
 interface VideoDownloadResponse {
   success: boolean;
-  path: string;
+  title: string;
 }
 /**
  *
@@ -285,6 +282,7 @@ window.download = async (
       url,
       format: format,
       type: formatType.toLocaleLowerCase(),
+      title: title.replace("/", " "),
       uuid,
     },
   );
@@ -292,7 +290,10 @@ window.download = async (
 
   if (data.success) {
     const a = document.createElement("a");
-    a.href = `/temp/${uuid}/${formatType.toLocaleLowerCase()}/${title}.${format}`;
+    a.href = `/temp/${uuid}/${formatType.toLocaleLowerCase()}/${title.replace(
+      "/",
+      " ",
+    )}.${format}`;
     console.log(a.href);
     a.download = `${title}.${format}`;
     a.click();
