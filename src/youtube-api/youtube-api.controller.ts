@@ -82,7 +82,7 @@ export class YoutubeApiController {
     @Res() res: Response,
   ) {
     //get ffmpeg file path
-    const ffmpegPath = join(__dirname, "..", "..", "..", "ffmpeg.exe");
+    const ffmpegPath = join(__dirname, "..", "..", "ffmpeg.exe");
     /**
      * create temp file path with user uuid
      * and file type
@@ -90,14 +90,13 @@ export class YoutubeApiController {
     const tempPath = join(
       __dirname,
       "..",
-      "..",
-      "..",
       "public",
       "temp",
       videoData.uuid,
       videoData.type,
       "%(title)s.%(ext)s",
     );
+    console.log(tempPath);
     //get yt-dlp path
     const yt_dlpPath = join(__dirname, "..", "..", "yt-dlp.exe");
     //check if vid data is video

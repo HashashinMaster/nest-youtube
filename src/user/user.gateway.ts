@@ -14,15 +14,7 @@ export class UserGateway {
   server: Server;
   @SubscribeMessage("userDisconnect")
   async handleUserDisconnect(@MessageBody("uuid") uuid: string) {
-    const folderPath = join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "public",
-      "temp",
-      uuid,
-    );
+    const folderPath = join(__dirname, "..", "public", "temp", uuid);
     access(folderPath, (error) => {
       if (!error) {
         (async () => {
