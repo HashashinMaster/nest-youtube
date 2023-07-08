@@ -10,15 +10,3 @@ const { join } = require("path");
     overwrite: true,
   });
 })();
-/**
- *  {
-        "include": "../views",
-        "outDir": "dist/views",
-        "watchAssets": true
-      },
-      {
-        "include": "../public",
-        "outDir": "dist/public",
-        "watchAssets": true
-      }
- */
