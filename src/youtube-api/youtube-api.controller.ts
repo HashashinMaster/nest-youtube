@@ -20,7 +20,7 @@ export class YoutubeApiController {
      * videoUrl: the url of the video
      */
     const { stdout, stderr } = await exec(
-      join(__dirname, "..", "..", "..", "yt-dlp.exe"),
+      join(__dirname, "..", "..", "yt-dlp.exe"),
       ["--dump-json", "--no-playlist", videoUrl],
     );
     //display error if exec func fails
@@ -53,7 +53,7 @@ export class YoutubeApiController {
      * And set maxBuffer to infinity because stdout is to large
      */
     const { stdout, stderr } = await exec(
-      join(__dirname, "..", "..", "..", "yt-dlp.exe"),
+      join(__dirname, "..", "..", "yt-dlp.exe"),
       [
         "--dump-single-json",
         "--clean-info-json",
@@ -99,7 +99,7 @@ export class YoutubeApiController {
       "%(title)s.%(ext)s",
     );
     //get yt-dlp path
-    const yt_dlpPath = join(__dirname, "..", "..", "..", "yt-dlp");
+    const yt_dlpPath = join(__dirname, "..", "..", "yt-dlp.exe");
     //check if vid data is video
     if (videoData.type === "videos") {
       /**
