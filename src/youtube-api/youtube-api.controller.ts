@@ -56,6 +56,7 @@ export class YoutubeApiController {
     const { stdout, stderr } = await exec(
       join(__dirname, "..", "..", "yt-dlp.exe"),
       [
+        "--ignore-errors",
         "--dump-single-json",
         "--clean-info-json",
         "--no-write-comments",
@@ -116,7 +117,7 @@ export class YoutubeApiController {
           ffmpegPath,
           `-o`,
           tempPath,
-          `--recode`,
+          "--remux-video",
           videoData.format,
           videoData.url,
         ],
