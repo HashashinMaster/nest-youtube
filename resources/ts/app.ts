@@ -107,9 +107,10 @@ const validateUrl = (url: string) => {
   let videoId: string;
   if (location.pathname === "/video") {
     //checks the youtube url type and extract video id from it
-    if (searchLink.hostname === "youtu.be")
+    if (searchLink.hostname === "youtu.be") {
       videoId = searchLink.pathname.slice(1);
-    else if (searchLink.searchParams.get("v")) {
+      return { allGood: true, videoId };
+    } else if (searchLink.searchParams.get("v")) {
       videoId = searchLink.searchParams.get("v");
       return { allGood: true, videoId };
     } else {
