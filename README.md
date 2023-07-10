@@ -41,4 +41,4 @@ $ npm run start:prod
 
 ## App demo
 
-COMING SOON.
+[![image thumb](https://img.youtube.com/vi/noGzn1MEcNU/default.jpg)](https://www.youtube.com/watch?v=noGzn1MEcNU)
